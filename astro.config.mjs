@@ -5,9 +5,9 @@ import react from '@astrojs/react';
 
 import tailwind from '@astrojs/tailwind';
 
-import auth from 'auth-astro';
+// import auth from 'auth-astro';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react(), tailwind(), auth()]
+  integrations: [react(), tailwind()]
 });
