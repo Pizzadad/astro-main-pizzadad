@@ -5,7 +5,7 @@ import react from '@astrojs/react';
 
 import tailwind from '@astrojs/tailwind';
 import node from '@astrojs/node';
-import netlify from '@astrojs/netlify/functions';
+import netlify from '@astrojs/netlify';
 //import auth from 'auth-astro';
 
 // https://astro.build/config
@@ -15,6 +15,9 @@ export default defineConfig({
   ],
   output: "server",
   adapter: 
+  // node( {
+  //   mode: 'standalone'
+  // } ),
   netlify({
     edgeMiddleware: true
   }),

@@ -17,7 +17,7 @@ export const getParfamsByPage = defineAction({
   ) => {
     page = page <= 0 ? 1 : page;
 
-    const parfams =  getParfamJson();
+    const parfams =  await getParfamJson();
 
     const totalPages = Math.ceil(parfams.length / limit);
 

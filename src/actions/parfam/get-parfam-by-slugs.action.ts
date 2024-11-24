@@ -10,7 +10,7 @@ export const getParfamsBySlug = defineAction({
   input: z.string(),
   handler: async ( slug ) => {
     
-    const parfams = getParfamJson();
+    const parfams = await getParfamJson();
 
     const result = parfams.find((p) => p.slug === slug);
     if (!result) {
