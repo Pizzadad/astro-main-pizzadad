@@ -1,0 +1,23 @@
+---
+interface Props {
+  fillColor?: string;
+  fillPercentage?: number;
+}
+
+const { fillColor = "#b51818", fillPercentage = 100 } = Astro.props;
+const gradientId = Math.random().toString(36).substring(2, 15);
+---
+
+<div class="relative inline-block lg:w-7 w-5 lg:h-7 h-5">
+  
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="100%"
+    height="100%"
+    viewBox="0 0 256 256"
+    ><path
+      fill={fillColor}
+      d="M216 28h-48a12 12 0 0 0 0 24h19l-32.72 32.74a84 84 0 1 0 17 17L204 69v19a12 12 0 0 0 24 0V40a12 12 0 0 0-12-12m-69.59 166.46a60 60 0 1 1 0-84.87a60.1 60.1 0 0 1 0 84.87"
+    ></path></svg
+  >
+</div>

@@ -1,0 +1,20 @@
+---
+import type { ParfamWithImages } from '@/interfaces';
+import ParfamCard from './ParfamCard.astro';
+
+
+export interface Props {
+  parfams: ParfamWithImages[];
+}
+
+const { parfams } = Astro.props;
+
+---
+
+<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 place-items-center">
+  {parfams.map((parfam) => (
+    <div class="w-full h-90 shadow-xl shadow-red-700/40 text-center">
+      <ParfamCard parfam={parfam} />      
+    </div>
+  ))}
+</div>

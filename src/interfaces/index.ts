@@ -1,0 +1,1 @@
+export * from './parfam-with-images.interface';

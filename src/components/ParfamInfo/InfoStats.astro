@@ -1,0 +1,51 @@
+---
+import {
+  SunIcon,
+  MoonIcon,
+  WinterIcon,
+  AutummIcon,
+  SummerIcon,
+  SpringIcon,
+} from "@/components/ParfamInfo/icons";
+
+export interface Props {
+  text: string;
+  hour?: { [key: string]: number };
+  season?: { [key: string]: number };
+}
+
+const { hour, season, text } = Astro.props;
+
+const data = hour || season;
+---
+
+<>
+  <p class="text-sm title-font text-gray-500 tracking-widest mb-4">
+    {text}
+  </p>
+  <div class="flex flex-row">
+    {
+      Object.entries(data!).map(([key, value]) => (
+        <div class="flex flex-col w-1/2 items-center gap-2">
+          {key === "día" && <SunIcon fillPercentage={Math.ceil(value)} />}
+          {key === "noche" && <MoonIcon fillPercentage={Math.ceil(value)} />}
+
+          {key === "invierno" && (
+            <WinterIcon fillPercentage={Math.ceil(value)} />
+          )}
+
+          {key === "otoño" && <AutummIcon fillPercentage={Math.ceil(value)} />}
+
+          {key === "primavera" && (
+            <SpringIcon fillPercentage={Math.ceil(value)} />
+          )}
+
+          {key === "verano" && <SummerIcon fillPercentage={Math.ceil(value)} />}
+
+          {/* <span class="hour-value">{Math.ceil(value)}</span> */}
+          <span class="text-sm title-font text-gray-500 tracking-widest capitalize">{key}</span>
+        </div>
+      ))
+    }
+  </div>
+</>

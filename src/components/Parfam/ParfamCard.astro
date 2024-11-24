@@ -1,0 +1,27 @@
+---
+import type { ParfamWithImages } from "@/interfaces";
+import { Image } from "astro:assets";
+
+export interface Props {
+  parfam: ParfamWithImages;
+}
+
+const { parfam } = Astro.props;
+---
+
+<>
+  <a href={`/parfam/${parfam.slug}`}>
+    <Image
+      src={parfam.image}
+      alt={parfam.name}
+      width="300"
+      height="250"
+      quality={80}
+      loading="lazy"
+      class="object-cover object-center w-full h-full block"
+    />
+  </a>
+  <span class="font-text">
+    {parfam.desiger} - {parfam.name}
+  </h4>
+</>
