@@ -22,7 +22,7 @@ export default defineConfig({
     edgeMiddleware: true
   }),
   image: {
-    remotePatterns: [{ protocol: "https" }],
+    domains: ['fraguru.com'],
   },
   devToolbar: {
     enabled: false
