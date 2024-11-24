@@ -8163,7 +8163,7 @@ var entry_default = async (request, context) => {
   const next = () => {
     const { netlify, ...otherLocals } = ctx.locals;
     request.headers.set("x-astro-locals", trySerializeLocals(otherLocals));
-    request.headers.set("x-astro-middleware-secret", "f86f7ba4-8f85-45d0-909b-1bdc0497472e");
+    request.headers.set("x-astro-middleware-secret", "d779c540-5321-43da-89ed-cd74a6a0b405");
     return context.next();
   };
   return onRequest(ctx, next);

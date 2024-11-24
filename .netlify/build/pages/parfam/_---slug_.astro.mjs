@@ -4,7 +4,7 @@ import 'kleur/colors';
 import 'html-escaper';
 import { a as actions } from '../../chunks/_astro_actions_BLFI3Ixd.mjs';
 import '@astrojs/internal-helpers/path';
-import { $ as $$Image } from '../../chunks/_astro_assets_HT9teWfi.mjs';
+import { $ as $$Image } from '../../chunks/_astro_assets_GECNgTTW.mjs';
 import 'clsx';
 import { b as $$Whatsapp, a as $$MainLayout } from '../../chunks/MainLayout_CKwuUFj8.mjs';
 /* empty css                                     */

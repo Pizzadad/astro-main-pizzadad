@@ -5,7 +5,7 @@ import 'html-escaper';
 import { a as actions } from '../chunks/_astro_actions_BLFI3Ixd.mjs';
 import { $ as $$Pagination, a as $$MainLayout } from '../chunks/MainLayout_CKwuUFj8.mjs';
 import '@astrojs/internal-helpers/path';
-import { $ as $$Image } from '../chunks/_astro_assets_HT9teWfi.mjs';
+import { $ as $$Image } from '../chunks/_astro_assets_GECNgTTW.mjs';
 export { renderers } from '../renderers.mjs';
 
 const $$Astro$2 = createAstro();

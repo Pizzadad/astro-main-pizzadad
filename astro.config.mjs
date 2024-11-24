@@ -10,7 +10,7 @@ import netlify from '@astrojs/netlify';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react(), tailwind()
+  integrations: [react(), tailwind(),
     //, auth()
   ],
   output: "server",
@@ -21,6 +21,9 @@ export default defineConfig({
   netlify({
     edgeMiddleware: true
   }),
+  image: {
+    remotePatterns: [{ protocol: "https" }],
+  },
   devToolbar: {
     enabled: false
   }
