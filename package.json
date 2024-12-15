@@ -24,10 +24,12 @@
     "canvas-confetti": "^1.9.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "swiper": "^11.1.15",
     "tailwindcss": "^3.4.14",
     "typescript": "^5.6.3"
   },
   "devDependencies": {
+    "@types/swiper": "^6.0.0",
     "astro": "^4.16.7"
   }
 }

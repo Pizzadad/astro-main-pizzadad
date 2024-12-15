@@ -5,7 +5,9 @@ import { actions } from 'astro:actions';
 
 import { Pagination } from '@/components/Shared';
 import MainLayout from '@/layouts/MainLayout.astro';
-import ParfamList from '@/components/Parfam/ParfamList.astro';
+import ParfamCard from '@/components/Parfam/ParfamCard.astro';
+
+export const prerender = false;
 
 const searchParams = Astro.url.searchParams;
 const pageParam = Number(searchParams.get('page') ?? 1);
@@ -15,7 +17,7 @@ const pageParam = Number(searchParams.get('page') ?? 1);
 // });
 
 const { data, error } = await Astro.callAction(actions.getParfamsByPage, { page: pageParam });
-console.log(error)
+
 if (error) {
   return Astro.redirect('/parfam');
 }
@@ -26,8 +28,15 @@ const {parfams, totalPages} = data;
 <MainLayout>
   <div class="container mx-auto flex flex-wrap justify-center  w-full h-full gap-4">
     <h1 class="text-3xl">Lista de perfumes</h1>
-    <ParfamList parfams={parfams}/>
-  
+
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 place-items-center">
+      {parfams.map((parfam) => (
+        <div class="w-full h-90 shadow-xl shadow-red-700/40 text-center">
+          <ParfamCard parfam={parfam} />      
+        </div>
+      ))}
+    </div>
+
     <Pagination totalPages={totalPages} />
 
   </div>

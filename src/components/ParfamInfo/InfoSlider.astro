@@ -1,0 +1,50 @@
+---
+import "swiper/css";
+import "swiper/css/pagination";
+
+import type { ParfamWithImages } from "@/interfaces/parfam-with-images.interface";
+import InfoImage from "./InfoImage.astro";
+import InfoBar from "./InfoBar.astro";
+
+export const prerender = false;
+
+export interface Props {
+  parfam: ParfamWithImages;
+}
+
+const { parfam } = Astro.props;
+---
+
+<div class="swiper">
+  <div class="swiper-wrapper mb-10 mr-10">
+    <div class="swiper-slide">
+      <InfoImage parfam={parfam} />
+    </div>
+    <div class="swiper-slide">
+      <InfoBar accord={parfam.accords} />
+    </div>
+  </div>
+  <!-- If we need pagination -->
+  <div class="swiper-pagination"></div>
+</div>
+
+<style>
+  .swiper {
+    width: 100%;
+    height: auto;
+  }
+</style>
+
+<script>
+  import Swiper from "swiper";
+  import { Pagination } from "swiper/modules";
+
+  const swiper = new Swiper(".swiper", {
+    // If we need pagination
+    pagination: {
+      el: ".swiper-pagination",
+    },
+
+    modules: [Pagination],
+  });
+</script>

@@ -13,7 +13,7 @@ export default defineConfig({
   integrations: [react(), tailwind(),
     //, auth()
   ],
-  output: "server",
+  output: "hybrid",
   adapter: 
   // node( {
   //   mode: 'standalone'

@@ -1,8 +1,12 @@
 ---
+import type { GetStaticPaths } from "astro";
 import { actions } from "astro:actions";
 import { Image } from "astro:assets";
 
-import ParfamInfoStats from "@/components/ParfamInfo/InfoStats.astro";
+import {
+  InfoType,
+  InfoStats,
+} from "@/components/ParfamInfo/";
 import MainLayout from "@/layouts/MainLayout.astro";
 
 import {
@@ -12,23 +16,38 @@ import {
   HeartIcon,
 } from "@/components/ParfamInfo/icons";
 import { Whatsapp } from "@/components/Shared";
-import InfoType from "@/components/ParfamInfo/InfoType.astro";
-import type { ParfamWithImages } from "@/interfaces/parfam-with-images.interface";
 
-const { slug } = Astro.params;
+import type { ParfamWithImages } from "@/interfaces/parfam-with-images.interface";
+import { getParfamJson } from "@/Util/get-parfam-json";
+import InfoSlider from "@/components/ParfamInfo/InfoSlider.astro";
 
 // const {data, error} = await actions.getParfamsBySlug(slug ?? '');
 
-const { data, error } = await Astro.callAction(
-  actions.getParfamsBySlug,
-  slug ?? ""
-);
+export const getStaticPaths = (async () => {
+  const data = await getParfamJson();
 
-if (error) {
-  return Astro.redirect("/");
-}
+  return data.map((parfam) => ({
+    params: {
+      slug: parfam.slug,
+    },
+    props: {
+      parfam,
+    },
+  }));
+}) satisfies GetStaticPaths;
 
-const { parfam } = data;
+const { slug } = Astro.params;
+
+// const { data, error } = await Astro.callAction(
+//   actions.getParfamsBySlug,
+//   slug ?? ""
+// );
+
+// if (error) {
+//   return Astro.redirect("/");
+// }
+
+const { parfam } = Astro.props;
 
 const phoneNumber = import.meta.env.PHONE_NUMBER;
 const message = import.meta.env.MESSAGE_DEFAULT;
@@ -70,37 +89,14 @@ const textNotes = getNotesText(parfam);
   <>
     <section class="overflow-hidden">
       <div class="flex lg:flex-row flex-col w-full mx-auto">
-        <div
-          class="flex-col flex w-1/3 max-w-[26rem] relative self-center
-          rounded-xl bg-gradient-to-tr from-red-800 to-red-600
-          bg-clip-border shadow-xl shadow-red-700/40"
+        <div class="flex-col flex w-1/3 max-w-[26rem] 
+          relative self-center"
         >
-          <Image
-            src={parfam.image}
-            alt={parfam.name}
-            inferSize
-            quality={80}
-            loading="lazy"
-            class="object-cover object-center w-full h-full block"
-          />
+          <InfoSlider parfam={parfam} />
+          <!-- <InfoImage parfam={parfam}/> -->
 
-          <!-- <img
-            alt={parfam.name}
-            class="w-full h-auto object-cover object-center rounded"
-            src={parfam.image}
-          /> -->
-          <button
-            class="!absolute lg:top-4 top-0 lg:right-4 right-0 h-8 max-h-[32px] w-8 max-w-[32px]"
-          >
-            <span
-              class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 transform"
-            >
-              {parfam.gender === "Hombres" && <MaleIcon />}
-              {parfam.gender === "Mujeres" && <WomenIcon />}
-              {parfam.gender === "Hombres y Mujeres" && <UnisexIcon />}
-            </span>
-          </button>
         </div>
+
 
         <div
           class="flex flex-col gap-4 lg:w-2/3 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0"
@@ -122,17 +118,17 @@ const textNotes = getNotesText(parfam);
           </div>
 
           <h2
-            class="text-sm title-font text-gray-500 tracking-widest lg:mb-0 mb-4"
+            class="text-base font-bold text-gray-500 tracking-widest lg:mb-0 mb-4"
           >
             {parfam.desiger}
           </h2>
 
           <div class="flex lg:flex-row flex-col gap-4 mb-2">
             <div class="flex flex-col lg:w-2/3 w-full">
-              <ParfamInfoStats text="Temporada" season={parfam.season} />
+              <InfoStats text="Temporada" season={parfam.season} />
             </div>
             <div class="flex flex-col lg:w-1/3 w-full">
-              <ParfamInfoStats text="Tiempo" hour={parfam.hour} />
+              <InfoStats text="Tiempo" hour={parfam.hour} />
             </div>
           </div>
 
@@ -144,39 +140,43 @@ const textNotes = getNotesText(parfam);
           </div> -->
 
           <div class="flex flex-row items-center w-full mx-auto px-2">
-           
-              <div class="text-4xl text-principal rotate-12">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="100%"
-                  height="100%"
-                  viewBox="0 0 24 24"
-                  ><path
-                    fill="currentColor"
-                    d="M9.583 17.321C8.553 16.227 8 15 8 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621c.537-.278 1.24-.375 1.929-.311c1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5a3.87 3.87 0 0 1-2.748-1.179"
-                  ></path></svg
-                >
-              </div>
-              <p
-                class="md:text-sm text-base text-gray-600 md:text-justify text-center italic"
+            <div class="text-4xl text-principal rotate-12">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                height="100%"
+                viewBox="0 0 24 24"
+                ><path
+                  fill="currentColor"
+                  d="M9.583 17.321C8.553 16.227 8 15 8 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621c.537-.278 1.24-.375 1.929-.311c1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5a3.87 3.87 0 0 1-2.748-1.179"
+                ></path></svg
               >
-                {textNotes}
-              </p>
-              <div
-                class="text-4xl text-principal rotate-12"
+            </div>
+            <p
+              class="md:text-sm text-base text-gray-600 md:text-justify text-center italic"
+            >
+              {textNotes}
+            </p>
+            <div class="text-4xl text-principal rotate-12">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                height="100%"
+                viewBox="0 0 24 24"
+                ><path
+                  fill="currentColor"
+                  d="M14.417 6.679C15.447 7.773 16 9 16 10.989c0 3.5-2.456 6.637-6.03 8.188l-.893-1.378c3.335-1.804 3.987-4.145 4.248-5.621c-.537.278-1.24.375-1.93.311C9.591 12.323 8.17 10.842 8.17 9a3.5 3.5 0 0 1 3.5-3.5c1.073 0 2.1.49 2.748 1.179"
+                ></path></svg
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="100%"
-                  height="100%"
-                  viewBox="0 0 24 24"
-                  ><path
-                    fill="currentColor"
-                    d="M14.417 6.679C15.447 7.773 16 9 16 10.989c0 3.5-2.456 6.637-6.03 8.188l-.893-1.378c3.335-1.804 3.987-4.145 4.248-5.621c-.537.278-1.24.375-1.93.311C9.591 12.323 8.17 10.842 8.17 9a3.5 3.5 0 0 1 3.5-3.5c1.073 0 2.1.49 2.748 1.179"
-                  ></path></svg
-                >
-              </div>            
+            </div>
           </div>
+
+          <p
+            class="text-sm title-font text-gray-500 tracking-widest lg:mb-0 mb-4"
+          >
+            Seleccione una presentación y de click al icono de Whatsapp para
+            continuar la compra
+          </p>
 
           <div class="flex sm:flex-row flex-col gap-4">
             {

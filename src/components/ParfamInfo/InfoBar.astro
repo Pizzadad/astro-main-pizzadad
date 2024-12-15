@@ -1,0 +1,24 @@
+---
+export interface Props {
+  accord: { [key: string]: number };
+}
+
+const { accord } = Astro.props;
+---
+
+<div class="flex flex-col gap-4 w-full">
+  {
+    Object.entries(accord).map(([key, value]) => (
+      <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+        <div
+          class="text-sm font-medium
+      text-blue-100 text-center 
+        p-1 leading-none rounded-full capitalize"
+          style={`width: ${Math.ceil(value)}%; background-color: #881212;`}
+        >
+          {key}
+        </div>
+      </div>
+    ))
+  }
+</div>

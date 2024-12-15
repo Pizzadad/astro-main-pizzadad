@@ -1,0 +1,35 @@
+---
+import type { ParfamWithImages } from "@/interfaces/parfam-with-images.interface";
+import { Image } from "astro:assets";
+import { MaleIcon, UnisexIcon, WomenIcon } from "./icons";
+
+export interface Props {
+  parfam: ParfamWithImages;
+}
+
+const { parfam } = Astro.props;
+---
+
+<div class="bg-gradient-to-tl from-red-800 to-red-600
+          shadow-xl shadow-red-700/40">
+  <Image
+    src={parfam.image}
+    alt={parfam.name}
+    inferSize
+    quality={80}
+    loading="lazy"
+    class="object-cover object-center w-full h-full block"
+  />
+
+  <button
+    class="!absolute lg:top-4 top-0 lg:right-4 right-0 h-8 max-h-[32px] w-8 max-w-[32px]"
+  >
+    <span
+      class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 transform"
+    >
+      {parfam.gender === "Hombres" && <MaleIcon />}
+      {parfam.gender === "Mujeres" && <WomenIcon />}
+      {parfam.gender === "Hombres y Mujeres" && <UnisexIcon />}
+    </span>
+  </button>
+</div>
