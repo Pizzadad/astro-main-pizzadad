@@ -1,5 +1,4 @@
 ---
-
 export interface Props {
   phoneNumber: string;
   message: string;
@@ -73,18 +72,22 @@ const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 </a>
 
 <script>
-  
+  import { selectedSize } from '@/store';
+
   document.addEventListener('DOMContentLoaded', () => {
-    const whatsappLink = document.querySelector('#whatsappLink');
+    const whatsappLink = document.getElementById('whatsappLink') as HTMLAnchorElement;
 
     if (whatsappLink) {
 
       whatsappLink.addEventListener('click', (event) => {
-        const selectedDiv = document.querySelector('.borderSelected')
+        const selectedDiv = document.querySelector('.border-principal')
 
         if(!selectedDiv){
           console.log('Selecciona un tamaño');
           event.preventDefault();
+        }
+        else{
+          whatsappLink.href = whatsappLink.href.replace('size', selectedSize.get());    
         }        
       });
     }
